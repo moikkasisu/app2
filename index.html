@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>weather app</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  </head>
+<style>
+  body {
+  background: steelblue; 
+  font: 1rem/1.3 sans-serif;
+  padding: 50px; 
+}
+.heading{
+  font-family: cursive;
+  color: darksalmon;  
+}
+button {
+  background-color: rgb(209, 224, 219); 
+  font-family: cursive;
+  color: darksalmon ; 
+}
+
+.card {
+  background-color: rgb(223, 217, 218);
+}
+</style>
+<body>
+  
+  <section class="search-section">
+    <div class="container" style="margin-top:3rem">
+        <h3 class="heading">Ugly Betty's Weather App v.0</h3>
+      <form style="margin-top:3rem">
+        <input type="text" placeholder="city name" autofocus>
+        <button type="submit" >search</button>
+        </form>
+    </div>
+  </section>
+  <section class="fetch-section">   
+    <div class="container" style="margin-top:3rem">  
+    <div id="cityweather">
+     <ul class="cities"></ul>
+    </div>
+    </div>
+  </section>
+
+  <script src="index.js"></script>  
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+ 
+</body>
+</html>
