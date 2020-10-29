@@ -4,6 +4,15 @@ const list = document.querySelector(".fetch-section .cities");
 
 const apiKey = config.MY_KEY;
 
+// handleSubmit(e){
+//   e.preventDefault();
+//   e.target.reset();
+//  }
+ 
+//  <form onSubmit={this.handleSubmit}>
+//    ...
+//  </form>
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   // e.stopPropagation();
@@ -71,19 +80,24 @@ const sunset = formatTime(sunsetTime);
  </div>
  </div>
  </div>`
-
       
       document.querySelector('#cityweather').innerHTML = cityHtml;        
       })
       .catch(() => {
-           const errorMessage = document.createElement('alert')
-           errorMessage.textContent = `Whoops, invalid search!~~ , if the city is in another country, please add country code like '.au' behind the city name"`
-           errorMessage.style.color = "red"; 
-           list.appendChild(errorMessage);
-           });
+                  
+          errorMsg=`<span style="color:red;">Whoops, invalid search! If the city is in another country, please add country code like '.au' behind the city name"</span>`;
           
-   form.reset();
-   input.focus();
-   });
-   
+           document.querySelector('#cityweather').innerHTML= errorMsg    
+           });
+ 
+    form.reset();
+    input.focus(); 
+    });
+
+
+ 
+ 
+                   
+
+  
 
