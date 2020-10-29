@@ -1,8 +1,8 @@
 const form = document.querySelector(".search-section form");
 const input = document.querySelector(".search-section input");
 const list = document.querySelector(".fetch-section .cities");
-const apiKey = "0768a4e78af72dde6ad5e5ddc1ac8c17";
 
+const apiKey = config.MY_KEY;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -11,45 +11,68 @@ form.addEventListener("submit", (e) => {
   let myRequest = new Request(
     `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${apiKey}&units=metric`
   );
+  
 
   fetch(myRequest)
     .then((response) => response.json())
     .then((resJSONed) => {
       const {main, name, sys, weather} = resJSONed;
-      // const icon = `./icons/${icon}2x.png`
-      const icons = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${weather[0].icon}.svg`;
-     
+         
       const city = resJSONed.name;
       const country = resJSONed.sys.country;
-      const temp = resJSONed.main.temp;
-      const description = resJSONed.weather[0].description;
+      const temp = Math.round(resJSONed.main.temp);
+      const mainWX = resJSONed.weather[0].main;
+      const windspeed = resJSONed.wind.speed;
+      const condition = resJSONed.weather[0].description;
       const feelsLike = resJSONed.main.feels_like;
-          
-      // const card = document.createElement('div')
-      // card.setAttribute('class', 'card')
-      // card.setAttribute("style", "background-color: yellow;")
-      // list.appendChild(card)
-      // const li = document.createElement("li");
-      // li.classList.add("city");
+     
+ 
+
+//  https://openweathermap.org/weather-conditions
+const iconCode = resJSONed.weather[0].icon;
+const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+const compassSector = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
+windDirection = compassSector[(resJSONed.wind.deg / 22.5).toFixed(0)];
+
+const date = new Date();
+const sunriseTime = new Date(resJSONed.sys.sunrise * 1000); //Convert a Unix timestamp to time
+const sunsetTime = new Date(resJSONed.sys.sunset * 1000);
+
+//ensure time output is hh:mm:ss
+const leadingZero = (num) => `0${num}`.slice(-2);
+
+const formatTime = (date) =>
+  [date.getHours(), date.getMinutes(), date.getSeconds()]
+  .map(leadingZero)
+  .join(':');
+
+const sunrise = formatTime(sunriseTime);
+const sunset = formatTime(sunsetTime);
+
+ const cityHtml = `  
+    
+  <div class="card" style="width:18rem";>
+  <div class "row d-flex justify-content-center">
+   <h4 class="card-header">${city} in ${country}</h4>
+    <div class="card-body">   
+    <img class="icon bg-info mx-auto text-center" src="${iconUrl}" alt="">   
+    <p class="card-text">
+    <ul>
+   <li>Sunrise ${sunrise}<br> Sunset ${sunset}</li>
+   <li>Temp: ${temp}<sup>°C</sup></li>
+   <li>Wind speed ${windspeed}, direction ${windDirection}</li>
+   <li>It feels like ${feelsLike}<sup>°C</sup></li>
+   <li> Weather Condition:<p>${mainWX}, ${condition}</p></li>
+   </ul>
+   <a href="https://openweathermap.org/"><br>click here for more details on openweathermap</a>
+   
+   </p>
+ </div>
+ </div>
+ </div>`
+
       
-      const cityHtml = ` 
-      <div class="card" style="width: 18rem;">
-      <div class "row d-flex justify-content-center">
-      <h5 class="card-header">${name} in ${sys.country}</h5>
-      <img class="city-icon" src="${icons}" alt="">
-       <div class="card-body">
-        <p class="card-text">
-        <small>Now is: ${new Date}</small>
-        <h6>Temperature: ${Math.round(main.temp)}<sup>°C</sup></h6> <small>feels like ${feelsLike}<sup>°C</sup></small>
-        <br>
-        <br>
-        Condition Now:
-        ${weather[0].description} 
-        <a href="https://openweathermap.org/"><br>click here for more details</a>
-        </p>
-      </div>
-      </div>`    
-              
       document.querySelector('#cityweather').innerHTML = cityHtml;        
       })
       .catch(() => {
